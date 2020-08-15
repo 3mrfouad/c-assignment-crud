@@ -25,6 +25,7 @@ namespace c_assignment_crud_3mrfouad
 
             //Creating list of dataset records
             List<string> names = new List<string>();
+            Console.WriteLine("\nWelcome to CRUD Database\nThrough this program, you can enter, edit, view the Database records\nNote:Total number of basic Database records is 10");
             //Calling menu options method
             menuOptns(names);
 
@@ -54,18 +55,7 @@ namespace c_assignment_crud_3mrfouad
                             getUsrInpt(strList);
                             break;
                         case 2: // data display mode
-                            if (strList.Count != 0)
-                            {
-                                Console.WriteLine("\nCapacity: {0}", strList.Count);
-                                for (int i = 0; i < strList.Count; i++)
-                                {
-                                    Console.WriteLine("Record [{0}", (i + 1) + "]" + "    Name:" + strList[i]);
-                                }
-                            }
-                            else // in case the records are empty, let the user know
-                            {
-                                Console.WriteLine("\nEmtpy Records, try menu option 1 to add new records");
-                            }
+                            displayRecords(strList);
                             break;
                         case 3: // exit the program
                             progExitFlg = true;
@@ -83,12 +73,32 @@ namespace c_assignment_crud_3mrfouad
         }
 
         //-----------------------------------
+        //Display Database Records
+        //-----------------------------------
+                static void displayRecords(List<string> strList)
+                {
+                    if (strList.Count != 0)
+                            {
+                                Console.WriteLine("\nCapacity: {0}", strList.Count);
+                                for (int i = 0; i < strList.Count; i++)
+                                {
+                                    Console.WriteLine("Record [{0}", (i + 1) + "]" + "    Name:" + strList[i]);
+                                }
+                            }
+                            else // in case the records are empty, let the user know
+                            {
+                                Console.WriteLine("\nEmtpy Records, try menu option 1 to add new records");
+                            }
+                }
+
+        //-----------------------------------
         //Get and validate user inputs method
         //-----------------------------------
         static void getUsrInpt(List<string> strList)
 
         {
             Console.WriteLine("\nCapacity: {0}", strList.Count); // for testing
+            Console.WriteLine("\nType <Exit> to end");
             // variables definition
             bool digtdetct = false, exitFlag = false;
             string tempStr = "";

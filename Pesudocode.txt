@@ -1,12 +1,133 @@
-Requirements (See Rubric for Details)
-Allow the user to input data of your choice (names, numbers, etc).
-List of names
+        /* 
+                 Title:C# Introduction Assignment – CRUD Assignment
 
+                 Purpose: The program is for small database managment is offers menu to
+                 the user to choose between entering new records up to 10 and displaying the existing records.
 
+                 Author: Amr Fouad
+                 
+                 Date of last edit: August 16, 2020 12:00 am
 
+                 Resources:
+                   In the project folder, Resources.txt
+                   */
 
+        Main
+        {
 
+            Create list of dataset records
+            call <menu options> method an pass the list name (pointers)
+        }
 
-Store the data that was entered in an array of length 10.
-Allow the user to print out the currently stored data.
-Continue to allow the user to enter data until the array is full, and keep the program loop running until exited with a sentinel value.
+        //-------------------
+        //Menu options method
+        //-------------------
+        menuOptns(List of stings (i.e.,pointer))
+        {
+            variables defintion
+            Program exit flag set it to false
+            Menu choice integer
+            Valid integer boolean
+            do
+            {
+               User options:
+               1. Enter Names to Database
+               2. Display Names Database
+               3. Exit
+
+               Validate user input to be integer and 1,2 or 3
+
+                If valid choice was selected by the user
+                {
+                    switch (Menu choice)
+                    {
+                        case 1: Data entry mode and Call <Get User Input>
+                        case 2: Data display mode
+
+                            if (List is empty)
+                            {
+                                Msg. the user about the empty database
+                            }
+                            else
+                            {
+                                Write to the console the populated records only
+                                For (the list count)
+                                {
+                                    Write to console the list value
+                                }
+                            }
+                        case 3: Exit the program case
+                            Set the Program exit flag to true
+                        default: In case of integer other than 1, 2 or 3
+                            Error message for invalid choice
+                    }
+                }
+                else // in case nondigit key pressed by by the user
+                {
+                    Validation Error for the unexpected input
+                }
+            } while (Program Exit Flag is not true);
+        }
+
+        //-----------------------------------
+        //Get and validate user inputs method
+        //-----------------------------------
+        Get User Inputs Method (Strings list)
+
+        {
+            // variables definition
+            boolean non letter character detected 
+                Data entery exit sequance flag            
+                Temporary string to hand user input
+            
+            // validating if user entered exit sequance
+
+            if (the list has 10 records) 
+            {
+               Msg. Records Maxed Out
+            }
+            else // otherwise, there is space for new records to be added
+            {
+
+                do
+                {
+
+                    do
+                    {
+                        non-letter bool = false; toidentify if characters other than letters exists within the entered names
+                        Prompt user to enter a name
+                        store user input in temporary string
+                        clean up white spaces leading/trialing usring trim
+                        for (All characters in the temp string) 
+                        {
+                            if (!(letter || whitespace)))
+                            {
+                               non letter character detected flag = true;
+                            }
+                        }
+
+                        if (non letter character detected flag)
+                        {
+                            Msg. Validation Error: invalid character was used
+                        }
+                        else if (empty string with white spaces only)
+                        {
+                            Msg. Validation Error: empty record was entered
+                        }
+                        else if (the user input is not "exit") // in case of all validation pass and the name is not exit
+                        {
+                            populate the list of string with new record using list.add
+                        }
+                        else // in case exit was entered, stop the data entry mode
+                        {
+                         Data entery exit sequance flag set to true;
+                        }
+
+                    } while (non letter character detected flag);
+
+                } while (!exitFlag && list count < 10); // list count validation less than 10 records
+            }
+
+        }
+    }
+}
