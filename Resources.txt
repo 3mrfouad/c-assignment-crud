@@ -2,3 +2,7 @@ String class
 https://docs.microsoft.com/en-us/dotnet/api/system.string?view=netcore-3.1
 Detect number in a string
 https://stackoverflow.com/questions/4734116/find-and-extract-a-number-from-a-string
+TryParse
+https://docs.microsoft.com/en-us/dotnet/api/system.int32.tryparse?view=netcore-3.1
+switch
+https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/switch
