@@ -1,0 +1,12 @@
+Requirements (See Rubric for Details)
+Allow the user to input data of your choice (names, numbers, etc).
+List of names
+
+
+
+
+
+
+Store the data that was entered in an array of length 10.
+Allow the user to print out the currently stored data.
+Continue to allow the user to enter data until the array is full, and keep the program loop running until exited with a sentinel value.
