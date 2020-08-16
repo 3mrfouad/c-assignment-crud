@@ -1,3 +1,5 @@
+List <T> class
+https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1?view=netcore-3.1
 String class
 https://docs.microsoft.com/en-us/dotnet/api/system.string?view=netcore-3.1
 Detect number in a string
@@ -10,3 +12,5 @@ Console.Readkey method
 https://docs.microsoft.com/en-us/dotnet/api/system.console.readkey?view=netcore-3.1
 String.IsNullOrWhiteSpace
 https://docs.microsoft.com/en-us/dotnet/api/system.string.isnullorwhitespace?view=netcore-3.1#System_String_IsNullOrWhiteSpace_System_String_
+conditional-operator
+https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/conditional-operator
