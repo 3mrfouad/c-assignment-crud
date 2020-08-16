@@ -5,15 +5,38 @@ namespace c_assignment_crud_3mrfouad_methods
 {
     class CRUD_Methods
     {
-        
+
+        //-------------------
+        //Search Record for Duplicates Method
+        //-------------------
+        public static bool SearchRecord(List<string> strList, string recordValue)
+        {
+            bool existingRecordFlag;
+            bool validRecordID;
+            int recordID;
+            recordID = strList.IndexOf(recordValue);
+            validRecordID = recordID == -1 ? false : true;
+            if (validRecordID)
+            {
+                existingRecordFlag = true;
+            }
+            else
+            {
+
+                existingRecordFlag = false;
+
+            }
+            return existingRecordFlag;
+        }
         //-------------------
         //Detele Record Method
         //-------------------
-        public static void DeleteRecord (List<string> strList)
+        public static void DeleteRecord(List<string> strList)
         {
+            bool exitFlag;
             ReadRecords(strList, false);
             Console.Write("\n1. Delete using record ID\n2. Delete using record value\n3. Exit\n");
-            bool editMenuExitFlg = false;
+            bool editMenuExitFlg = false, exitFlag = false;
             int menuChoice, subMenuChoice;
             bool validMenuChoice, validSubMenuChoice;
             int recordID = 0;
@@ -35,10 +58,11 @@ namespace c_assignment_crud_3mrfouad_methods
                                 {
                                     if (recordID > 0 && recordID <= strList.Count)
                                     {
-                                       strList.RemoveAt(recordID);
-                                       strList.Sort();
-                                       // CreateRecord(strList, recordID, 2);
-                                        Console.Write("\n1. Edit another record\n2. Return to main menu");
+                                        strList.RemoveAt(recordID);
+                                        strList.Sort();
+                                        // CreateRecord(strList, recordID, 2);
+
+                                        Console.Write("\n1. Edit another record\n2. Return to main menu\n");
                                         validSubMenuChoice = int.TryParse(Console.ReadKey(true).KeyChar.ToString(), out subMenuChoice);
                                         if (!validSubMenuChoice)
                                         {
@@ -84,10 +108,10 @@ namespace c_assignment_crud_3mrfouad_methods
                                     recordID++;
                                     if (recordID > 0 && recordID <= strList.Count)
                                     {
-                                       strList.RemoveAt(recordID);
-                                       strList.Sort();
-                                       // CreateRecord(strList, recordID, 2);
-                                        Console.Write("\n1. Edit another record\n2. Return to main menu");
+                                        strList.RemoveAt(recordID);
+                                        strList.Sort();
+                                        // CreateRecord(strList, recordID, 2);
+                                        Console.Write("\n1. Edit another record\n2. Return to main menu\n");
                                         validSubMenuChoice = int.TryParse(Console.ReadKey(true).KeyChar.ToString(), out subMenuChoice);
                                         if (!validSubMenuChoice)
                                         {
@@ -147,7 +171,7 @@ namespace c_assignment_crud_3mrfouad_methods
             do
             {
                 //Display menu options 1,2, and 3
-                Console. Clear();
+                Console.Clear();
                 Console.WriteLine("\nSelect Menu Option: \n1. Enter new records\n2. Display records\n3. Edit records\n4. Delete records\n5. Exit");
                 //Validate user input to be a valid 1,2 or 3
                 // Using ReadKey method to enhance the UX, the user won't need to press enter, and the letter won't be displayed on the console
@@ -171,28 +195,28 @@ namespace c_assignment_crud_3mrfouad_methods
                             else
                             {
                                 Console.Clear();
-                                Console.WriteLine("\nEmpty Database, no records to edit\nPress <ENTER> to go back to the main menu");
+                                Console.WriteLine("\nEmpty Database, no records to edit\nPress <ENTER> to go back to the main menu\n");
                                 Console.ReadLine();
                             }
                             break;
                         case 4:
-                        if (strList.Count != 0)
+                            if (strList.Count != 0)
                             {
                                 DeleteRecord(strList);
                             }
                             else
                             {
                                 Console.Clear();
-                                Console.WriteLine("\nEmpty Database, no records to edit\nPress <ENTER> to go back to the main menu");
+                                Console.WriteLine("\nEmpty Database, no records to edit\nPress <ENTER> to go back to the main menu\n");
                                 Console.ReadLine();
                             }
-                        break;
+                            break;
                         case 5: // exit the program
                             progExitFlg = true;
                             break;
                         default: // in case of integer other than 1, 2 or 3
                             Console.Clear();
-                            Console.WriteLine("\n\nValidation Error: invalid menu choice\nPress <ENTER> to go back to the main menu");
+                            Console.WriteLine("\n\nValidation Error: invalid menu choice\nPress <ENTER> to go back to the main menu\n");
                             Console.ReadLine();
                             break;
                     }
@@ -200,7 +224,7 @@ namespace c_assignment_crud_3mrfouad_methods
                 else // in case nondigit key pressed by by the user
                 {
                     Console.Clear();
-                    Console.WriteLine("\n\nValidation Error: unexpected input\nPress <ENTER> to go back to the main menu");
+                    Console.WriteLine("\n\nValidation Error: unexpected input\nPress <ENTER> to go back to the main menu\n");
                     Console.ReadLine();
                 }
             } while (!progExitFlg);
@@ -212,14 +236,16 @@ namespace c_assignment_crud_3mrfouad_methods
 
         public static void UpdateRecords(List<string> strList)
         {
-            ReadRecords(strList, false);
-            Console.Write("\n1. Edit using record ID\n2. Edit using record value\n3. Exit\n");
             bool editMenuExitFlg = false;
             int menuChoice, subMenuChoice;
             bool validMenuChoice, validSubMenuChoice;
             int recordID = 0;
-            bool validRecordID;
+            bool validRecordID, exitFlag = false;
             string recordValue;
+            ReadRecords(strList, false);
+
+            Console.Write("\n1. Edit using record ID\n2. Edit using record value\n3. Exit\n");
+
             do
             {
                 validMenuChoice = int.TryParse(Console.ReadKey(true).KeyChar.ToString(), out menuChoice);
@@ -236,24 +262,27 @@ namespace c_assignment_crud_3mrfouad_methods
                                 {
                                     if (recordID > 0 && recordID <= strList.Count)
                                     {
-                                        CreateRecord(strList, recordID, 2);
-                                        Console.Write("\n1. Edit another record\n2. Return to main menu");
-                                        validSubMenuChoice = int.TryParse(Console.ReadKey(true).KeyChar.ToString(), out subMenuChoice);
-                                        if (!validSubMenuChoice)
+                                        exitFlag = CreateRecord(strList, recordID, 2);
+                                        if (!exitFlag)
                                         {
-                                            Console.WriteLine("\nValidation Error: invalid menu choice, try agin:");
-                                        }
-                                        else
-                                        {
-                                            switch (subMenuChoice)
+                                            Console.Write("\n1. Edit another record\n2. Return to main menu\n");
+                                            validSubMenuChoice = int.TryParse(Console.ReadKey(true).KeyChar.ToString(), out subMenuChoice);
+                                            if (!validSubMenuChoice)
                                             {
-                                                case 1:
-                                                    UpdateRecords(strList);
-                                                    break;
-                                                default:
-                                                    break;
+                                                Console.WriteLine("\nValidation Error: invalid menu choice, try agin:");
                                             }
+                                            else
+                                            {
+                                                switch (subMenuChoice)
+                                                {
+                                                    case 1:
+                                                        UpdateRecords(strList);
+                                                        break;
+                                                    default:
+                                                        break;
+                                                }
 
+                                            }
                                         }
 
 
@@ -268,8 +297,9 @@ namespace c_assignment_crud_3mrfouad_methods
                                 {
                                     Console.WriteLine("\nValidation Error: unexpected input, non-numerical value is used");
                                 }
-                            } while ((recordID > strList.Count + 1 || !validRecordID) && strList.Count > 0);
+                            } while ((recordID > strList.Count + 1 || !validRecordID) && strList.Count > 0 && !exitFlag);
                             editMenuExitFlg = true;
+
                             break;
                         case 2: // edit using record value
                             do
@@ -284,7 +314,7 @@ namespace c_assignment_crud_3mrfouad_methods
                                     if (recordID > 0 && recordID <= strList.Count)
                                     {
                                         CreateRecord(strList, recordID, 2);
-                                        Console.Write("\n1. Edit another record\n2. Return to main menu");
+                                        Console.Write("\n1. Edit another record\n2. Return to main menu\n");
                                         validSubMenuChoice = int.TryParse(Console.ReadKey(true).KeyChar.ToString(), out subMenuChoice);
                                         if (!validSubMenuChoice)
                                         {
@@ -327,11 +357,16 @@ namespace c_assignment_crud_3mrfouad_methods
                     }
                 }
                 else // in case nondigit key pressed by by the user
+
                 {
                     Console.WriteLine("Validation Error: unexpected input, try agin:");
                 }
             } while (!editMenuExitFlg);
+
+
         }
+
+
 
         //-----------------------
         //Read (Dispaly) Records
@@ -340,42 +375,42 @@ namespace c_assignment_crud_3mrfouad_methods
         {
             if (strList.Count != 0)
             {
-                Console. Clear();
+                Console.Clear();
                 Console.WriteLine("\nThe Database has: {0}", strList.Count + " records");
                 for (int i = 0; i < strList.Count; i++)
                 {
                     Console.WriteLine("Record [{0}", (i + 1) + "]" + "    Name:" + strList[i]);
                 }
-            if (clearConsole)
-            {
-                Console.WriteLine("Press <ENTER> to proceed");
-                Console.ReadLine();
-            }
+                if (clearConsole)
+                {
+                    Console.WriteLine("Press <ENTER> to proceed");
+                    Console.ReadLine();
+                }
             }
             else // in case the records are empty, let the user know
             {
                 Console.Clear();
-                Console.WriteLine("\nEmtpy Database, no records to display\nPress <ENTER> to go back to the main menu");
+                Console.WriteLine("\nEmtpy Database, no records to display\nPress <ENTER> to go back to the main menu\n");
                 Console.ReadLine();
             }
-            
+
         }
 
         //------------------------------------------
         //Create Record, Validate User Input Method
         //------------------------------------------
-        public static void CreateRecord(List<string> strList, int recordID, int newOrEdit)
+        public static bool CreateRecord(List<string> strList, int recordID, int newOrEdit)
 
         {
             if (newOrEdit == 1)
             {
-                Console. Clear();
-                Console.WriteLine("\nYour next record ID is: {0}", strList.Count+1); // for testing
+                Console.Clear();
+                Console.WriteLine("\nYour next record ID is: {0}", strList.Count + 1); // for testing
             }
 
-            Console.WriteLine("\nWhen finished, Type <Exit> to return to the main menu");
+            Console.WriteLine("\nWhen finished, Type <Exit> to return to the main menu\n");
             // variables definition
-            bool digtdetct = false, exitFlag = false;
+            bool digtdetct = false, exitFlag = false, existingRecordFlag = false;
             string tempStr = "";
             // validating if user entered exit sequance
 
@@ -413,22 +448,31 @@ namespace c_assignment_crud_3mrfouad_methods
                         }
                         else if (tempStr.ToLower() != "exit") // in case of all validation pass and the name is not exit
                         {
-                            if (newOrEdit == 1)
+                            existingRecordFlag = SearchRecord(strList, tempStr);
+                            if (!existingRecordFlag)
                             {
-                                strList.Add(tempStr);
-                                strList.Sort();
-                            }
-                            else if (newOrEdit == 2 && recordID == 0)
-                            {
-                                strList.Add(tempStr);
-                                strList.Sort();
-                                exitFlag = true;
+                                if (newOrEdit == 1)
+                                {
+                                    strList.Add(tempStr);
+                                    strList.Sort();
+                                }
+                                else if (newOrEdit == 2 && recordID == 0)
+                                {
+                                    strList.Add(tempStr);
+                                    strList.Sort();
+                                    exitFlag = true;
+                                }
+                                else
+                                {
+                                    strList[recordID - 1] = tempStr;
+                                    strList.Sort();
+                                    exitFlag = true;
+                                }
                             }
                             else
                             {
-                                strList[recordID - 1] = tempStr;
-                                strList.Sort();
-                                exitFlag = true;
+                                Console.WriteLine("\nValidation Error: Record already exits, try again or type <Exit> if finished\n");
+                                existingRecordFlag = false;
                             }
                         }
                         else // in case exit was entered, stop the data entry mode
@@ -440,8 +484,7 @@ namespace c_assignment_crud_3mrfouad_methods
 
                 } while (!exitFlag && strList.Count < 10); // list count validation less than 10 records
             }
-            return;
+            return exitFlag;
         }
-   
     }
 }
