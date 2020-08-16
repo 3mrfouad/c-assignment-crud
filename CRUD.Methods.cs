@@ -11,10 +11,16 @@ namespace c_assignment_crud_3mrfouad_methods
         //-------------------
         public static bool SearchRecord(List<string> strList, string recordValue)
         {
+             List<string> tempStr = new List<string>();
             bool existingRecordFlag;
             bool validRecordID;
             int recordID;
-            recordID = strList.IndexOf(recordValue);
+            tempStr = strList;
+            foreach (string str in tempStr)
+            {
+                str.ToLower();
+            }
+            recordID = tempStr.IndexOf(recordValue.ToLower());
             validRecordID = recordID == -1 ? false : true;
             if (validRecordID)
             {
