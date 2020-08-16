@@ -27,7 +27,11 @@ namespace c_assignment_crud_3mrfouad
             List<string> names = new List<string>();
             Console.WriteLine("\nWelcome to CRUD Database\nThrough this program, you can enter, edit, view the Database records\nNote:Total number of basic Database records is 10");
             //Calling menu options method
+<<<<<<< HEAD
+            CRUD_Methods.MenuOptions(names);
+=======
             menuOptns(names);
+>>>>>>> parent of 813b132... Edit records feature added, tested and soltution working properly at this point with the available features
 
         }
 

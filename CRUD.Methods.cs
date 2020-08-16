@@ -5,12 +5,10 @@ namespace c_assignment_crud_3mrfouad_methods
 {
     class CRUD_Methods
     {
+        
         //-------------------
-        //Menu options method
+        //Detele Record Method
         //-------------------
-<<<<<<< HEAD
-        public static void menuOptns(List<string> strList)
-=======
         public static void DeleteRecord (List<string> strList)
         {
             ReadRecords(strList, false);
@@ -142,7 +140,6 @@ namespace c_assignment_crud_3mrfouad_methods
         //Menu Options Method
         //-------------------
         public static void MenuOptions(List<string> strList)
->>>>>>> 972eed6... Delete records feature added, tested and soltution working properly at this point with the available features
         {
             bool progExitFlg = false;
             int menuChoice;
@@ -151,7 +148,7 @@ namespace c_assignment_crud_3mrfouad_methods
             {
                 //Display menu options 1,2, and 3
                 Console. Clear();
-                Console.WriteLine("\nSelect Menu Option: \n1. Enter new records\n2. Display records\n3. Edit records \n4. Exit");
+                Console.WriteLine("\nSelect Menu Option: \n1. Enter new records\n2. Display records\n3. Edit records\n4. Delete records\n5. Exit");
                 //Validate user input to be a valid 1,2 or 3
                 // Using ReadKey method to enhance the UX, the user won't need to press enter, and the letter won't be displayed on the console
                 validMenuChoice = int.TryParse(Console.ReadKey(true).KeyChar.ToString(), out menuChoice);
@@ -161,15 +158,15 @@ namespace c_assignment_crud_3mrfouad_methods
                     switch (menuChoice)
                     {
                         case 1: // record entry mode
-                            newRecordInpt(strList, 0, 1);
+                            CreateRecord(strList, 0, 1);
                             break;
                         case 2: // records display mode
-                            displayRecords(strList, true);
+                            ReadRecords(strList, true);
                             break;
                         case 3: // edit record mode
                             if (strList.Count != 0)
                             {
-                                editRecords(strList);
+                                UpdateRecords(strList);
                             }
                             else
                             {
@@ -178,7 +175,19 @@ namespace c_assignment_crud_3mrfouad_methods
                                 Console.ReadLine();
                             }
                             break;
-                        case 4: // exit the program
+                        case 4:
+                        if (strList.Count != 0)
+                            {
+                                DeleteRecord(strList);
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                Console.WriteLine("\nEmpty Database, no records to edit\nPress <ENTER> to go back to the main menu");
+                                Console.ReadLine();
+                            }
+                        break;
+                        case 5: // exit the program
                             progExitFlg = true;
                             break;
                         default: // in case of integer other than 1, 2 or 3
@@ -197,13 +206,13 @@ namespace c_assignment_crud_3mrfouad_methods
             } while (!progExitFlg);
         }
 
-        //-----------------------------------
-        //Edit Database Records
-        //-----------------------------------
+        //------------------------
+        //Update Database Records
+        //------------------------
 
-        public static void editRecords(List<string> strList)
+        public static void UpdateRecords(List<string> strList)
         {
-            displayRecords(strList, false);
+            ReadRecords(strList, false);
             Console.Write("\n1. Edit using record ID\n2. Edit using record value\n3. Exit\n");
             bool editMenuExitFlg = false;
             int menuChoice, subMenuChoice;
@@ -227,7 +236,7 @@ namespace c_assignment_crud_3mrfouad_methods
                                 {
                                     if (recordID > 0 && recordID <= strList.Count)
                                     {
-                                        newRecordInpt(strList, recordID, 2);
+                                        CreateRecord(strList, recordID, 2);
                                         Console.Write("\n1. Edit another record\n2. Return to main menu");
                                         validSubMenuChoice = int.TryParse(Console.ReadKey(true).KeyChar.ToString(), out subMenuChoice);
                                         if (!validSubMenuChoice)
@@ -239,7 +248,7 @@ namespace c_assignment_crud_3mrfouad_methods
                                             switch (subMenuChoice)
                                             {
                                                 case 1:
-                                                    editRecords(strList);
+                                                    UpdateRecords(strList);
                                                     break;
                                                 default:
                                                     break;
@@ -274,7 +283,7 @@ namespace c_assignment_crud_3mrfouad_methods
                                     recordID++;
                                     if (recordID > 0 && recordID <= strList.Count)
                                     {
-                                        newRecordInpt(strList, recordID, 2);
+                                        CreateRecord(strList, recordID, 2);
                                         Console.Write("\n1. Edit another record\n2. Return to main menu");
                                         validSubMenuChoice = int.TryParse(Console.ReadKey(true).KeyChar.ToString(), out subMenuChoice);
                                         if (!validSubMenuChoice)
@@ -286,7 +295,7 @@ namespace c_assignment_crud_3mrfouad_methods
                                             switch (subMenuChoice)
                                             {
                                                 case 1:
-                                                    editRecords(strList);
+                                                    UpdateRecords(strList);
                                                     break;
                                                 default:
                                                     break;
@@ -324,10 +333,10 @@ namespace c_assignment_crud_3mrfouad_methods
             } while (!editMenuExitFlg);
         }
 
-        //-----------------------------------
-        //Display Database Records
-        //-----------------------------------
-        public static void displayRecords(List<string> strList, bool clearConsole)
+        //-----------------------
+        //Read (Dispaly) Records
+        //-----------------------
+        public static void ReadRecords(List<string> strList, bool clearConsole)
         {
             if (strList.Count != 0)
             {
@@ -352,10 +361,10 @@ namespace c_assignment_crud_3mrfouad_methods
             
         }
 
-        //-----------------------------------
-        //Get and validate user inputs method
-        //-----------------------------------
-        public static void newRecordInpt(List<string> strList, int recordID, int newOrEdit)
+        //------------------------------------------
+        //Create Record, Validate User Input Method
+        //------------------------------------------
+        public static void CreateRecord(List<string> strList, int recordID, int newOrEdit)
 
         {
             if (newOrEdit == 1)
@@ -433,5 +442,6 @@ namespace c_assignment_crud_3mrfouad_methods
             }
             return;
         }
+   
     }
 }
