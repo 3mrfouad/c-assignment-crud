@@ -8,7 +8,141 @@ namespace c_assignment_crud_3mrfouad_methods
         //-------------------
         //Menu options method
         //-------------------
+<<<<<<< HEAD
         public static void menuOptns(List<string> strList)
+=======
+        public static void DeleteRecord (List<string> strList)
+        {
+            ReadRecords(strList, false);
+            Console.Write("\n1. Delete using record ID\n2. Delete using record value\n3. Exit\n");
+            bool editMenuExitFlg = false;
+            int menuChoice, subMenuChoice;
+            bool validMenuChoice, validSubMenuChoice;
+            int recordID = 0;
+            bool validRecordID;
+            string recordValue;
+            do
+            {
+                validMenuChoice = int.TryParse(Console.ReadKey(true).KeyChar.ToString(), out menuChoice);
+                if (validMenuChoice) // If valid digit was pressed by the user
+                {
+                    switch (menuChoice)
+                    {
+                        case 1: // edit using record ID
+                            do
+                            {
+                                Console.Write("\n\nEnter a record ID to delete:");
+                                validRecordID = int.TryParse(Console.ReadLine(), out recordID); // futher validation needed
+                                if (validRecordID)
+                                {
+                                    if (recordID > 0 && recordID <= strList.Count)
+                                    {
+                                       strList.RemoveAt(recordID);
+                                       strList.Sort();
+                                       // CreateRecord(strList, recordID, 2);
+                                        Console.Write("\n1. Edit another record\n2. Return to main menu");
+                                        validSubMenuChoice = int.TryParse(Console.ReadKey(true).KeyChar.ToString(), out subMenuChoice);
+                                        if (!validSubMenuChoice)
+                                        {
+                                            Console.WriteLine("\nValidation Error: invalid menu choice, try agin:");
+                                        }
+                                        else
+                                        {
+                                            switch (subMenuChoice)
+                                            {
+                                                case 1:
+                                                    DeleteRecord(strList);
+                                                    break;
+                                                default:
+                                                    break;
+                                            }
+
+                                        }
+
+
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("\nValidation Error: Record doesn't exit");
+                                        validRecordID = false;
+                                    }
+                                }
+                                else
+                                {
+                                    Console.WriteLine("\nValidation Error: unexpected input, non-numerical value is used");
+                                }
+                            } while ((recordID > strList.Count + 1 || !validRecordID) && strList.Count > 0);
+                            editMenuExitFlg = true;
+                            break;
+                        case 2: // edit using record value
+                            do
+                            {
+                                Console.Write("\n\nEnter a record Value to delete:");
+                                recordValue = Console.ReadLine(); //futher validation needed
+                                recordID = strList.IndexOf(recordValue);
+                                validRecordID = recordID == -1 ? false : true;
+                                if (validRecordID)
+                                {
+                                    recordID++;
+                                    if (recordID > 0 && recordID <= strList.Count)
+                                    {
+                                       strList.RemoveAt(recordID);
+                                       strList.Sort();
+                                       // CreateRecord(strList, recordID, 2);
+                                        Console.Write("\n1. Edit another record\n2. Return to main menu");
+                                        validSubMenuChoice = int.TryParse(Console.ReadKey(true).KeyChar.ToString(), out subMenuChoice);
+                                        if (!validSubMenuChoice)
+                                        {
+                                            Console.WriteLine("\nValidation Error: invalid menu choice, try agin:");
+                                        }
+                                        else
+                                        {
+                                            switch (subMenuChoice)
+                                            {
+                                                case 1:
+                                                    DeleteRecord(strList);
+                                                    break;
+                                                default:
+                                                    break;
+                                            }
+
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("\nValidation Error: Record doesn't exit");
+                                        validRecordID = false;
+                                    }
+                                }
+                                else
+                                {
+                                    Console.WriteLine("\nValidation Error: Record doesn't exit");
+                                }
+                            } while ((recordID > strList.Count + 1 || !validRecordID) && strList.Count > 0);
+                            editMenuExitFlg = true;
+                            break;
+
+                        case 3: // exit the program
+                            editMenuExitFlg = true;
+                            break;
+                        default: // in case of integer other than 1, 2 or 3
+                            Console.WriteLine("\nValidation Error: invalid menu choice, try agin:");
+                            break;
+                    }
+                }
+                else // in case nondigit key pressed by by the user
+                {
+                    Console.WriteLine("Validation Error: unexpected input, try agin:");
+                }
+            } while (!editMenuExitFlg);
+
+        }
+        //-------------------
+        //Menu Options Method
+        //-------------------
+        public static void MenuOptions(List<string> strList)
+>>>>>>> 972eed6... Delete records feature added, tested and soltution working properly at this point with the available features
         {
             bool progExitFlg = false;
             int menuChoice;
@@ -273,15 +407,18 @@ namespace c_assignment_crud_3mrfouad_methods
                             if (newOrEdit == 1)
                             {
                                 strList.Add(tempStr);
+                                strList.Sort();
                             }
                             else if (newOrEdit == 2 && recordID == 0)
                             {
                                 strList.Add(tempStr);
+                                strList.Sort();
                                 exitFlag = true;
                             }
                             else
                             {
                                 strList[recordID - 1] = tempStr;
+                                strList.Sort();
                                 exitFlag = true;
                             }
                         }
