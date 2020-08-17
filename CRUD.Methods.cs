@@ -195,6 +195,7 @@ namespace c_assignment_crud_3mrfouad_methods
                                         }
                                         else // after deleting one record, prompt the user to delete another record or exit
                                         {   // get user choice to delete another record or exit
+                                            ReadRecords(strList, 0); // visual aid the user by displaying list of the database
                                             Console.Write("\nSelect Menu Option:\n[1] Delete Another Record\n[2] Return to Main Menu\n");
                                             validSubMenuChoice = int.TryParse(Console.ReadKey(true).KeyChar.ToString(), out subMenuChoice);
                                             if (!validSubMenuChoice) // if the choice is not valid, print validation error
@@ -251,7 +252,8 @@ namespace c_assignment_crud_3mrfouad_methods
                                             Console.ReadKey(true);
                                         }
                                         else
-                                        {
+                                        {   
+                                            ReadRecords(strList, 0); // visual aid the user by displaying list of the database
                                             Console.Write("\nSelect Menu Option:\n[1] Delete Another Record\n[2] Return to Main Menu\n");
                                             validSubMenuChoice = int.TryParse(Console.ReadKey(true).KeyChar.ToString(), out subMenuChoice);
                                             if (!validSubMenuChoice)
@@ -413,6 +415,7 @@ namespace c_assignment_crud_3mrfouad_methods
                                     {
                                         CreateRecord(strList, recordID, 2); // use create record to suplement the edit function (insert)
                                         //prompt the user if another record to be edited or exit
+                                        ReadRecords(strList, 0); // visual aid the user by displaying list of the database
                                         Console.Write("\nSelect Menu Option:\n[1] Edit Another Record\n[2] Return to Main Menu\n");
                                         //validate menu option choice character
                                         validSubMenuChoice = int.TryParse(Console.ReadKey(true).KeyChar.ToString(), out subMenuChoice);
@@ -461,6 +464,7 @@ namespace c_assignment_crud_3mrfouad_methods
                                     {
                                         CreateRecord(strList, recordID, 2); // call create record (insert)
                                         // prompt the user to edit another record or exit
+                                        ReadRecords(strList, 0); // visual aid the user by displaying list of the database
                                         Console.Write("\nSelect Menu Option:\n[1] Edit Another Record\n[2] Return to Main Menu\n");
                                         //validate menu choice pressed
                                         validSubMenuChoice = int.TryParse(Console.ReadKey(true).KeyChar.ToString(), out subMenuChoice);
