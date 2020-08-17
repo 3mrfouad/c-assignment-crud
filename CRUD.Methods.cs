@@ -227,9 +227,8 @@ namespace c_assignment_crud_3mrfouad_methods
                             do
                             {
                                 Console.Write("\n\nEnter a record Value to delete:");
-                                recordValue = Console.ReadLine(); // get record value
-                                recordID = strList.IndexOf(recordValue); // get the ID of the record value and follow same logic as the ID case
-                                validRecordID = recordID == -1 ? false : true;
+                                recordValue = Console.ReadLine().Trim(); //temp store in temp var
+                                validRecordID = SearchRecord(strList, recordValue); // checking if the record exists & get record value
                                 if (validRecordID)
                                 {
                                     recordID++;
@@ -447,9 +446,8 @@ namespace c_assignment_crud_3mrfouad_methods
                             do
                             {   // in case of using record value instead of ID
                                 Console.Write("\n\nEnter a record Value to edit:"); // get record value
-                                recordValue = Console.ReadLine(); //temp store in temp var
-                                recordID = strList.IndexOf(recordValue); // get value index (ID)
-                                validRecordID = recordID == -1 ? false : true; // check if ID exits
+                                recordValue = Console.ReadLine().Trim(); //temp store in temp var
+                                validRecordID = SearchRecord(strList, recordValue); // checking if the record exists & get value index (ID)
                                 if (validRecordID) // if ID is valid
                                 {
                                     recordID++;
@@ -568,7 +566,7 @@ namespace c_assignment_crud_3mrfouad_methods
                 {
                     digtdetct = false; // bool to identify if characters other than letters exists within the entered names
                     Console.Write("Please Enter a Name:");
-                    tempStr = Console.ReadLine(); //store user input in temporary string
+                    tempStr = Console.ReadLine().Trim(); //store user input in temporary string
                     tempStr = tempStr.Trim(); // clean up white spaces leading/trialing
                     existingRecordFlag = SearchRecord(strList, tempStr);
                     if (existingRecordFlag)
