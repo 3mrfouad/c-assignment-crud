@@ -7,11 +7,43 @@ namespace c_assignment_crud_3mrfouad_methods
     {
 
         //-------------------
+        //Import Records
+        //-------------------
+        public statis ExportRecords((List<string> strList)
+        {
+            string fileName;
+            Console.Write("/nEnter a file name to export Records to Database");
+            fileName = Console.ReadLine(); // add filename validation
+            foreach (string str in strList)
+            {
+                System.IO.File.WriteAllText(@"DataBaseRecords.txt", str, "\n");
+            }
+            Console.Write("Records were successfully exported");
+
+        }
+        //-------------------
+        //Export Records
+        //-------------------
+        public statis ImportRecords((List<string> strList)
+            {
+
+            string fileName;
+            Console.Write("/nEnter a file name to import Records to Database");
+            fileName = Console.ReadLine(); // add filename validation
+            foreach (string str in strList)
+            {
+                str = System.IO.File.ReadAllLines(@"DataBaseRecords.txt");
+                SortedList.Add(str);
+            }
+            Console.Write("Records were successfully imported");
+
+        }
+        //-------------------
         //Search Record for Duplicates Method
         //-------------------
         public static bool SearchRecord(List<string> strList, string recordValue)
         {
-             List<string> tempStr = new List<string>();
+            List<string> tempStr = new List<string>();
             bool existingRecordFlag;
             bool validRecordID;
             int recordID;
@@ -39,10 +71,9 @@ namespace c_assignment_crud_3mrfouad_methods
         //-------------------
         public static void DeleteRecord(List<string> strList)
         {
-            bool exitFlag;
             ReadRecords(strList, false);
             Console.Write("\n1. Delete using record ID\n2. Delete using record value\n3. Exit\n");
-            bool editMenuExitFlg = false, exitFlag = false;
+            bool editMenuExitFlg = false;
             int menuChoice, subMenuChoice;
             bool validMenuChoice, validSubMenuChoice;
             int recordID = 0;
@@ -178,7 +209,7 @@ namespace c_assignment_crud_3mrfouad_methods
             {
                 //Display menu options 1,2, and 3
                 Console.Clear();
-                Console.WriteLine("\nSelect Menu Option: \n1. Enter new records\n2. Display records\n3. Edit records\n4. Delete records\n5. Exit");
+                Console.WriteLine("\nSelect Menu Option: \n1. Enter new records\n2. Display records\n3. Edit records\n4. Delete records\n5. Import Database\n6. Export Database\n7. Exit");
                 //Validate user input to be a valid 1,2 or 3
                 // Using ReadKey method to enhance the UX, the user won't need to press enter, and the letter won't be displayed on the console
                 validMenuChoice = int.TryParse(Console.ReadKey(true).KeyChar.ToString(), out menuChoice);
@@ -217,7 +248,13 @@ namespace c_assignment_crud_3mrfouad_methods
                                 Console.ReadLine();
                             }
                             break;
-                        case 5: // exit the program
+                        case 6:
+                            ImportRecords();
+                            break;
+                        case 7:
+                            ExportRecords();
+                            break;
+                        case 7: // exit the program
                             progExitFlg = true;
                             break;
                         default: // in case of integer other than 1, 2 or 3
@@ -492,5 +529,9 @@ namespace c_assignment_crud_3mrfouad_methods
             }
             return exitFlag;
         }
+
+
     }
+
+
 }
