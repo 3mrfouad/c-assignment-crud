@@ -1,6 +1,9 @@
 using System;
-using System.Collections.Generic; // to include lists    
 using System.IO;
+using System.Linq;
+using System.Collections.Generic;
+
+
 
 namespace c_assignment_crud_3mrfouad_methods
 {
@@ -130,28 +133,17 @@ namespace c_assignment_crud_3mrfouad_methods
         //-----------------------------------------------
         public static bool SearchRecord(List<string> strList, string recordValue)
         {   //variables definition, including temp string list
-            List<string> tempStr = new List<string>();
-            bool existingRecordFlag;
             bool validRecordID;
             int recordID;
-            tempStr = strList; // temp string list to perform the .tolower operations without missing up the original records
-            foreach (string str in tempStr)
+            // temp string list to perform the .tolower operations without missing up the original records
+            List<string> tempStr = strList.ToList();
+            for (int i = 0; i < tempStr.Count; i++) //foreach(string str in tempStr)
             {
-                str.ToLower();
+                tempStr[i] = tempStr[i].ToLower(); // Converting the temp string to lower case
             }
             recordID = tempStr.IndexOf(recordValue.ToLower()); // get the record ID
             validRecordID = recordID == -1 ? false : true; // check if valid record
-            if (validRecordID) // sit the existing flag to true or false based on being valid record or not
-            {
-                existingRecordFlag = true;
-            }
-            else
-            {
-
-                existingRecordFlag = false;
-
-            }
-            return existingRecordFlag; // return the exiting record flag to the calling code block
+            return validRecordID;// return the exiting record flag to the calling code block
         }
         //----------------------
         //Detele Records Method
@@ -252,7 +244,7 @@ namespace c_assignment_crud_3mrfouad_methods
                                             Console.ReadKey(true);
                                         }
                                         else
-                                        {   
+                                        {
                                             ReadRecords(strList, 0); // visual aid the user by displaying list of the database
                                             Console.Write("\nSelect Menu Option:\n[1] Delete Another Record\n[2] Return to Main Menu\n");
                                             validSubMenuChoice = int.TryParse(Console.ReadKey(true).KeyChar.ToString(), out subMenuChoice);
@@ -312,6 +304,7 @@ namespace c_assignment_crud_3mrfouad_methods
             do
             {
                 //Display menu options 1 to 7
+                strList = strList.Distinct().ToList(); // To account for any un expected duplicates that might make it to the list (safe gaurd)
                 Console.Clear();
                 Console.WriteLine("\nSelect Menu Option: \n[1] Enter New Records\n[2] Display Records\n[3] Edit Records\n[4] Delete Records\n[5] Import Database\n[6] Export Database\n[7] Exit Program");
                 //Validate user input to be a valid 1,2 or 3
@@ -517,6 +510,7 @@ namespace c_assignment_crud_3mrfouad_methods
         //-----------------------
         public static void ReadRecords(List<string> strList, int clearConsole)
         {
+            strList = strList.Distinct().ToList(); // To account for any un expected duplicates that might make it to the list (safe gaurd)
             if (strList.Count != 0) // if ther eis records to display
             {
                 if (clearConsole < 3) // clear console flag to cater multiple code block calling this method. in some cases, the console clear is harmful
@@ -635,8 +629,7 @@ namespace c_assignment_crud_3mrfouad_methods
                     }
                 } while (digtdetct);
                 // The commented code is part of the change in Rubric from 10 records to dynamically resizable
-            } while (!exitFlag /*&& strList.Count < 10*/); // list count validation less than allowed records
-                                                           //  }
+            } while (!exitFlag /*&& strList.Count < 10*/); // list count validation less than allowed records  
             return exitFlag;
         }
     }

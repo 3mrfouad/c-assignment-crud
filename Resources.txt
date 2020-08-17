@@ -30,3 +30,7 @@ Streamer Reader Class
 https://docs.microsoft.com/en-us/dotnet/api/system.io.streamreader?view=netcore-3.1
 FileInfo (file exists)
 https://docs.microsoft.com/en-us/dotnet/api/system.io.fileinfo.exists?view=netcore-3.1
+How to copy list to list
+https://stackoverflow.com/questions/1952185/how-do-i-copy-items-from-list-to-list-without-foreach
+How to remove duplicates from a list
+https://www.dotnetperls.com/duplicates
