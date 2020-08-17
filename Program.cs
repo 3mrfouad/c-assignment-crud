@@ -47,7 +47,7 @@ namespace c_assignment_crud_3mrfouad
                 i++;
             }
             while(i<=1);
-            Console.WriteLine("\nPress <Enter> to Proceed");
+            Console.WriteLine("\nPress any key to Proceed");
             Console.ReadKey();
             //Calling menu options method
             CRUD_Methods.MenuOptions(names);

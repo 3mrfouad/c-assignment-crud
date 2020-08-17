@@ -411,29 +411,28 @@ namespace c_assignment_crud_3mrfouad_methods
                                 {
                                     if (recordID > 0 && recordID <= strList.Count) // if ID is within list range
                                     {
-                                        exitFlag = CreateRecord(strList, recordID, 2); // use create record to suplement the edit function (insert)
-                                        if (!exitFlag)
-                                        {   //prompt the user if another record to be edited or exit
-                                            Console.Write("\nSelect Menu Option:\n[1] Edit Another Record\n[2] Return to Main Menu\n");
-                                            //validate menu option choice character
-                                            validSubMenuChoice = int.TryParse(Console.ReadKey(true).KeyChar.ToString(), out subMenuChoice);
-                                            if (!validSubMenuChoice) // print validation error if 1 or 2 not pressed
-                                            {
-                                                Console.WriteLine("\nValidation Error: invalid menu choice, try agin:");
-                                            }
-                                            else // if another record to be edited, call the edit method again
-                                            {
-                                                switch (subMenuChoice)
-                                                {
-                                                    case 1:
-                                                        UpdateRecords(strList);
-                                                        break;
-                                                    default:
-                                                        break;
-                                                }
-
-                                            }
+                                        CreateRecord(strList, recordID, 2); // use create record to suplement the edit function (insert)
+                                        //prompt the user if another record to be edited or exit
+                                        Console.Write("\nSelect Menu Option:\n[1] Edit Another Record\n[2] Return to Main Menu\n");
+                                        //validate menu option choice character
+                                        validSubMenuChoice = int.TryParse(Console.ReadKey(true).KeyChar.ToString(), out subMenuChoice);
+                                        if (!validSubMenuChoice) // print validation error if 1 or 2 not pressed
+                                        {
+                                            Console.WriteLine("\nValidation Error: invalid menu choice, try agin:");
                                         }
+                                        else // if another record to be edited, call the edit method again
+                                        {
+                                            switch (subMenuChoice)
+                                            {
+                                                case 1:
+                                                    UpdateRecords(strList);
+                                                    break;
+                                                default:
+                                                    break;
+                                            }
+
+                                        }
+
                                     }
                                     else // incase the record ID doesn't exit
                                     {
@@ -565,76 +564,76 @@ namespace c_assignment_crud_3mrfouad_methods
             else // otherwise, there is space for new records to be added
             {*/
             /*-------------------------------------------------------------------------------------------*/
+            do
+            {
                 do
                 {
-                    do
+                    digtdetct = false; // bool to identify if characters other than letters exists within the entered names
+                    Console.Write("Please Enter a Name:");
+                    tempStr = Console.ReadLine(); //store user input in temporary string
+                    tempStr = tempStr.Trim(); // clean up white spaces leading/trialing
+                    existingRecordFlag = SearchRecord(strList, tempStr);
+                    if (existingRecordFlag)
                     {
-                        digtdetct = false; // bool to identify if characters other than letters exists within the entered names
-                        Console.Write("Please Enter a Name:");
-                        tempStr = Console.ReadLine(); //store user input in temporary string
-                        tempStr = tempStr.Trim(); // clean up white spaces leading/trialing
-                        existingRecordFlag = SearchRecord(strList, tempStr);
-                        if (existingRecordFlag)
+                        Console.WriteLine("\nValidation Error: Record already exits, try again or type <Exit> if finished\n");
+                        existingRecordFlag = false;
+                    }
+                    else
+                    {
+                        for (int i = 0; i < tempStr.Length; i++) // search for non letters (or white spaces) within the name
                         {
-                            Console.WriteLine("\nValidation Error: Record already exits, try again or type <Exit> if finished\n");
-                            existingRecordFlag = false;
-                        }
-                        else
-                        {
-                            for (int i = 0; i < tempStr.Length; i++) // search for non letters (or white spaces) within the name
+                            if (!(Char.IsLetter(tempStr[i]) || Char.IsWhiteSpace(tempStr[i])))
                             {
-                                if (!(Char.IsLetter(tempStr[i]) || Char.IsWhiteSpace(tempStr[i])))
-                                {
-                                    digtdetct = true; // if digit or special character detected, don't allow it in a name
-                                }
-                            }
-                            if (digtdetct) // in case non letters were entered by the user
-                            {
-                                Console.WriteLine("\nValidation Error: invalid character was used\n");
-                            }
-                            else if (String.IsNullOrWhiteSpace(tempStr)) // in case of just white spaces entered by the user
-                            {
-                                Console.WriteLine("\nValidation Error: empty record was entered\n");
-                            }
-                            else if (tempStr.ToLower() != "exit") // in case of all validation pass and the name is not exit
-                            {
-                                existingRecordFlag = SearchRecord(strList, tempStr);
-                                if (!existingRecordFlag)
-                                {
-                                    if (newOrEdit == 1) // add new record case
-                                    {
-                                        strList.Add(tempStr);
-                                        strList.Sort();
-                                    }
-                                    else if (newOrEdit == 2 && recordID == 0)
-                                    {
-                                        strList.Add(tempStr); // add new record case for during edit index 0
-                                        strList.Sort();
-                                        exitFlag = true; // exit flag as it is edit, no loop needed
-                                    }
-                                    else // edit case, direct assignment
-                                    {
-                                        strList[recordID - 1] = tempStr;
-                                        strList.Sort();
-                                        exitFlag = true; // exit flag as it is edit, no loop needed
-                                    }
-                                }
-                                else
-                                {   //Validate if the record exits, don't allow it
-                                    Console.WriteLine("\nValidation Error: Record already exits, try again or type <Exit> if finished\n");
-                                    existingRecordFlag = false;
-                                }
-                            }
-                            else // in case exit was entered, stop the data entry mode
-                            {
-                                exitFlag = true; // exit flag as exit was entered by user
+                                digtdetct = true; // if digit or special character detected, don't allow it in a name
                             }
                         }
-                    } while (digtdetct);
+                        if (digtdetct) // in case non letters were entered by the user
+                        {
+                            Console.WriteLine("\nValidation Error: invalid character was used\n");
+                        }
+                        else if (String.IsNullOrWhiteSpace(tempStr)) // in case of just white spaces entered by the user
+                        {
+                            Console.WriteLine("\nValidation Error: empty record was entered\n");
+                        }
+                        else if (tempStr.ToLower() != "exit") // in case of all validation pass and the name is not exit
+                        {
+                            existingRecordFlag = SearchRecord(strList, tempStr);
+                            if (!existingRecordFlag)
+                            {
+                                if (newOrEdit == 1) // add new record case
+                                {
+                                    strList.Add(tempStr);
+                                    strList.Sort();
+                                }
+                                else if (newOrEdit == 2 && recordID == 0)
+                                {
+                                    strList.Add(tempStr); // add new record case for during edit index 0
+                                    strList.Sort();
+                                    exitFlag = true; // exit flag as it is edit, no loop needed
+                                }
+                                else // edit case, direct assignment
+                                {
+                                    strList[recordID - 1] = tempStr;
+                                    strList.Sort();
+                                    exitFlag = true; // exit flag as it is edit, no loop needed
+                                }
+                            }
+                            else
+                            {   //Validate if the record exits, don't allow it
+                                Console.WriteLine("\nValidation Error: Record already exits, try again or type <Exit> if finished\n");
+                                existingRecordFlag = false;
+                            }
+                        }
+                        else // in case exit was entered, stop the data entry mode
+                        {
+                            exitFlag = true; // exit flag as exit was entered by user
+                        }
+                    }
+                } while (digtdetct);
                 // The commented code is part of the change in Rubric from 10 records to dynamically resizable
-                } while (!exitFlag /*&& strList.Count < 10*/); // list count validation less than allowed records
-                                                               //  }
-                return exitFlag;
-            }
+            } while (!exitFlag /*&& strList.Count < 10*/); // list count validation less than allowed records
+                                                           //  }
+            return exitFlag;
         }
     }
+}
