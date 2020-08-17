@@ -22,3 +22,11 @@ Write to a file
 https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/file-system/how-to-write-to-a-text-file
 Read text file one line at a time
 https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/file-system/how-to-read-a-text-file-one-line-at-a-time
+File System
+https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/file-system/
+File Length (Size)
+https://docs.microsoft.com/en-us/dotnet/api/system.io.fileinfo.length?view=netcore-3.1
+Streamer Reader Class
+https://docs.microsoft.com/en-us/dotnet/api/system.io.streamreader?view=netcore-3.1
+FileInfo (file exists)
+https://docs.microsoft.com/en-us/dotnet/api/system.io.fileinfo.exists?view=netcore-3.1

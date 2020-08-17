@@ -7,58 +7,120 @@ namespace c_assignment_crud_3mrfouad_methods
     class CRUD_Methods
     {
 
-        //-------------------
-        //Import Records
-        //-------------------
-        /*         public static ExportRecords(List<string> strList)
+        //---------------------------------------
+        //Export Records Method (Write to a File)
+        //---------------------------------------
+        public static void ExportRecords(List<string> strList)
+        {
+            char tryAnotherFileName;
+            string fileName;
+            Console.Clear();
+            do
+            {   //get file name from user
+                tryAnotherFileName = 'N';
+                Console.Clear();
+                Console.Write("\nEnter a file name to export records to Database: ");
+                fileName = Console.ReadLine().Trim();
+                // filename validation
+                if (new FileInfo(fileName).Exists == true)
                 {
-                    string fileName;
-                    Console.Write("/nEnter a file name to export Records to Database");
-                    fileName = Console.ReadLine(); // add filename validation
-                    foreach (string str in strList)
+                    Console.WriteLine("The file already exits", fileName);
+                    Console.WriteLine("\n1. Override\n2. Try differnt file name\n3. Cancel and return to main menu");
+                    char fileOverride = Console.ReadKey(true).KeyChar;
+                    switch (fileOverride)
                     {
-                        System.IO.File.WriteAllText(@"DataBaseRecords.txt", str, "\n");
-                    }
-                    Console.Write("Records were successfully exported");
+                        case '1':
+                            Console.WriteLine("\nAre you sure? Press <y> to confirm\nOr press anykey to exit");
+                            if (Char.ToLower(Console.ReadKey().KeyChar) == 'y')
+                            {
+                                using (StreamWriter  file = new StreamWriter(fileName))
+                                {
+                                    for (int i = 0; i < strList.Count; i++)
+                                    {
+                                        file.WriteLineAsync(strList[i]);
+                                        file.WriteLine();
+                                    }
+                                }
+                                    //file.Close();
+                                    Console.WriteLine("\n[" + fileName + "] Records were successfully exported");
+                                    ReadRecords(strList, 3);
+                                }
+                                break;
 
-                } */
-        //-------------------
-        //Export Records
-        //-------------------
+                        case '2':
+                            tryAnotherFileName = 'Y';
+                            break;
+
+                        case '3':
+                            break;
+
+                        default:
+                            Console.WriteLine("\nValidation Error: invalid input");
+                            Console.WriteLine("\nPress anykey to return to main menu");
+                            Console.ReadKey();
+                            break;
+                    }
+                }
+                else
+                {
+                    using (StreamWriter file = new StreamWriter(fileName))
+                    {
+                        for (int j = 0; j < strList.Count; j++)
+                        {
+                            file.WriteAsync(strList[j]);
+                            file.WriteLine();
+                        }
+                    }
+                    //file.Close();
+                    Console.WriteLine("\n[" + fileName + "] Records were successfully exported");
+                    ReadRecords(strList, 3);
+                }
+
+            } while (tryAnotherFileName == 'Y');
+
+
+        }
+        //----------------------
+        //Import Records Method
+        //----------------------
         public static void ImportRecords(List<string> strList)
         {
-
             int i = 0;
             char tryAnotherFileName;
             string fileName;
             Console.Clear();
-            
-
             do
-            {   
+            {
                 tryAnotherFileName = 'N';
                 Console.Clear();
-                Console.Write("\nEnter a file name to import Records to Database: ");
+                Console.Write("\nEnter a file name to import records to Database: ");
                 fileName = Console.ReadLine().Trim(); // add filename validation
                 try
                 {
                     var file = new StreamReader(fileName);
-                    do
-
+                    if (new FileInfo(fileName).Length != 0)
                     {
-                        strList.Add(file.ReadLine());
-                        //Console.Write("\nInside For Loop\n"); for troubleshootin
-                        i++;
-                    } while (i < 10 && file.ReadLine() != null);
-
-                    file.Close(); // add file close validation
-                    Console.Clear();
-                    Console.WriteLine("\n[" + fileName + "] Records were successfully imported");
-                    ReadRecords(strList, 3);
+                        string[] fileLines = System.IO.File.ReadAllLines(fileName);
+                        foreach (string line in fileLines)
+                        {
+                            strList.Insert(i, line);
+                            i++;
+                        }
+                        file.Close();
+                        Console.WriteLine("\n[" + fileName + "] Records were successfully imported");
+                        ReadRecords(strList, 3);
+                    }
+                    else if (new FileInfo(fileName).Length == 0)
+                    {
+                        Console.WriteLine("\n[" + fileName + "] has no records to import");
+                        Console.WriteLine("\nPress <y> to try another file name\nOr press anykey to go to main menu");
+                        tryAnotherFileName = Char.ToUpper(Console.ReadKey(true).KeyChar);
+                    }
                 }
-                catch
+                catch (Exception ex)
                 {
-                    Console.WriteLine("\nThe file name can't be found, make sure your enter a correct file name including its extension\nExample: RecordsFile.txt");
+                    Console.WriteLine("\n" + ex.Message);
+                    Console.WriteLine("\nMake sure your enter a correct file name including its extension\nExample: recordsFile.txt");
                     Console.WriteLine("\nPress <y> to try another file name\nOr press anykey to go to main menu");
                     tryAnotherFileName = Char.ToUpper(Console.ReadKey(true).KeyChar);
                 }
@@ -290,9 +352,18 @@ namespace c_assignment_crud_3mrfouad_methods
                         case 5:
                             ImportRecords(strList);
                             break;
-                        /*  case 6:
-                             ExportRecords(strList);
-                             break; */
+                        case 6:
+                            if (strList.Count != 0)
+                            {
+                                ExportRecords(strList);
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                Console.WriteLine("\nEmpty Database, no records to export\nPress any key to go back to the main menu\n");
+                                Console.ReadKey(true);
+                            }
+                            break;
                         case 7: // exit the program
                             progExitFlg = true;
                             break;
@@ -447,9 +518,6 @@ namespace c_assignment_crud_3mrfouad_methods
 
 
         }
-
-
-
         //-----------------------
         //Read (Dispaly) Records
         //-----------------------
