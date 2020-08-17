@@ -192,7 +192,9 @@ namespace c_assignment_crud_3mrfouad_methods
                                         {
                                             Console.WriteLine("\nEmpty Database, no records to edit\nPress any key to go back to the main menu\n");
                                             Console.ReadKey(true);
-
+                                        }
+                                        else
+                                        {
                                             Console.Write("\n1. Delete another record\n2. Return to main menu\n");
                                             validSubMenuChoice = int.TryParse(Console.ReadKey(true).KeyChar.ToString(), out subMenuChoice);
                                             if (!validSubMenuChoice)
