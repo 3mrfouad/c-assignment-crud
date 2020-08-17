@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic; // to include lists    
+using System.IO;
 
 namespace c_assignment_crud_3mrfouad_methods
 {
@@ -9,33 +10,60 @@ namespace c_assignment_crud_3mrfouad_methods
         //-------------------
         //Import Records
         //-------------------
-        public statis ExportRecords((List<string> strList)
-        {
-            string fileName;
-            Console.Write("/nEnter a file name to export Records to Database");
-            fileName = Console.ReadLine(); // add filename validation
-            foreach (string str in strList)
-            {
-                System.IO.File.WriteAllText(@"DataBaseRecords.txt", str, "\n");
-            }
-            Console.Write("Records were successfully exported");
+        /*         public static ExportRecords(List<string> strList)
+                {
+                    string fileName;
+                    Console.Write("/nEnter a file name to export Records to Database");
+                    fileName = Console.ReadLine(); // add filename validation
+                    foreach (string str in strList)
+                    {
+                        System.IO.File.WriteAllText(@"DataBaseRecords.txt", str, "\n");
+                    }
+                    Console.Write("Records were successfully exported");
 
-        }
+                } */
         //-------------------
         //Export Records
         //-------------------
-        public statis ImportRecords((List<string> strList)
-            {
+        public static void ImportRecords(List<string> strList)
+        {
 
+            int i = 0;
+            char tryAnotherFileName;
             string fileName;
-            Console.Write("/nEnter a file name to import Records to Database");
-            fileName = Console.ReadLine(); // add filename validation
-            foreach (string str in strList)
-            {
-                str = System.IO.File.ReadAllLines(@"DataBaseRecords.txt");
-                SortedList.Add(str);
-            }
-            Console.Write("Records were successfully imported");
+            Console.Clear();
+            
+
+            do
+            {   
+                tryAnotherFileName = 'N';
+                Console.Clear();
+                Console.Write("\nEnter a file name to import Records to Database: ");
+                fileName = Console.ReadLine().Trim(); // add filename validation
+                try
+                {
+                    var file = new StreamReader(fileName);
+                    do
+
+                    {
+                        strList.Add(file.ReadLine());
+                        //Console.Write("\nInside For Loop\n"); for troubleshootin
+                        i++;
+                    } while (i < 10 && file.ReadLine() != null);
+
+                    file.Close(); // add file close validation
+                    Console.Clear();
+                    Console.WriteLine("\n[" + fileName + "] Records were successfully imported");
+                    ReadRecords(strList, 3);
+                }
+                catch
+                {
+                    Console.WriteLine("\nThe file name can't be found, make sure your enter a correct file name including its extension\nExample: RecordsFile.txt");
+                    Console.WriteLine("\nPress <y> to try another file name\nOr press anykey to go to main menu");
+                    tryAnotherFileName = Char.ToUpper(Console.ReadKey(true).KeyChar);
+                }
+
+            } while (tryAnotherFileName == 'Y');
 
         }
         //-------------------
@@ -71,7 +99,7 @@ namespace c_assignment_crud_3mrfouad_methods
         //-------------------
         public static void DeleteRecord(List<string> strList)
         {
-            ReadRecords(strList, false);
+            ReadRecords(strList, 0);
             Console.Write("\n1. Delete using record ID\n2. Delete using record value\n3. Exit\n");
             bool editMenuExitFlg = false;
             int menuChoice, subMenuChoice;
@@ -95,29 +123,33 @@ namespace c_assignment_crud_3mrfouad_methods
                                 {
                                     if (recordID > 0 && recordID <= strList.Count)
                                     {
-                                        strList.RemoveAt(recordID);
+                                        strList.RemoveAt(recordID - 1);
                                         strList.Sort();
                                         // CreateRecord(strList, recordID, 2);
+                                        if (strList.Count == 0)
+                                        {
+                                            Console.WriteLine("\nEmpty Database, no records to edit\nPress any key to go back to the main menu\n");
+                                            Console.ReadKey(true);
 
-                                        Console.Write("\n1. Edit another record\n2. Return to main menu\n");
-                                        validSubMenuChoice = int.TryParse(Console.ReadKey(true).KeyChar.ToString(), out subMenuChoice);
-                                        if (!validSubMenuChoice)
-                                        {
-                                            Console.WriteLine("\nValidation Error: invalid menu choice, try agin:");
-                                        }
-                                        else
-                                        {
-                                            switch (subMenuChoice)
+                                            Console.Write("\n1. Delete another record\n2. Return to main menu\n");
+                                            validSubMenuChoice = int.TryParse(Console.ReadKey(true).KeyChar.ToString(), out subMenuChoice);
+                                            if (!validSubMenuChoice)
                                             {
-                                                case 1:
-                                                    DeleteRecord(strList);
-                                                    break;
-                                                default:
-                                                    break;
+                                                Console.WriteLine("\nValidation Error: invalid menu choice, try agin:");
                                             }
+                                            else
+                                            {
+                                                switch (subMenuChoice)
+                                                {
+                                                    case 1:
+                                                        DeleteRecord(strList);
+                                                        break;
+                                                    default:
+                                                        break;
+                                                }
 
+                                            }
                                         }
-
 
                                     }
                                     else
@@ -145,28 +177,35 @@ namespace c_assignment_crud_3mrfouad_methods
                                     recordID++;
                                     if (recordID > 0 && recordID <= strList.Count)
                                     {
-                                        strList.RemoveAt(recordID);
+                                        strList.RemoveAt(recordID - 1);
                                         strList.Sort();
                                         // CreateRecord(strList, recordID, 2);
-                                        Console.Write("\n1. Edit another record\n2. Return to main menu\n");
-                                        validSubMenuChoice = int.TryParse(Console.ReadKey(true).KeyChar.ToString(), out subMenuChoice);
-                                        if (!validSubMenuChoice)
+                                        if (strList.Count == 0)
                                         {
-                                            Console.WriteLine("\nValidation Error: invalid menu choice, try agin:");
+                                            Console.WriteLine("\nEmpty Database, no records to edit\nPress any key to go back to the main menu\n");
+                                            Console.ReadKey(true);
                                         }
                                         else
                                         {
-                                            switch (subMenuChoice)
+                                            Console.Write("\n1. Edit another record\n2. Return to main menu\n");
+                                            validSubMenuChoice = int.TryParse(Console.ReadKey(true).KeyChar.ToString(), out subMenuChoice);
+                                            if (!validSubMenuChoice)
                                             {
-                                                case 1:
-                                                    DeleteRecord(strList);
-                                                    break;
-                                                default:
-                                                    break;
+                                                Console.WriteLine("\nValidation Error: invalid menu choice, try agin:");
                                             }
+                                            else
+                                            {
+                                                switch (subMenuChoice)
+                                                {
+                                                    case 1:
+                                                        DeleteRecord(strList);
+                                                        break;
+                                                    default:
+                                                        break;
+                                                }
 
+                                            }
                                         }
-
                                     }
                                     else
                                     {
@@ -222,7 +261,7 @@ namespace c_assignment_crud_3mrfouad_methods
                             CreateRecord(strList, 0, 1);
                             break;
                         case 2: // records display mode
-                            ReadRecords(strList, true);
+                            ReadRecords(strList, 1);
                             break;
                         case 3: // edit record mode
                             if (strList.Count != 0)
@@ -232,8 +271,8 @@ namespace c_assignment_crud_3mrfouad_methods
                             else
                             {
                                 Console.Clear();
-                                Console.WriteLine("\nEmpty Database, no records to edit\nPress <ENTER> to go back to the main menu\n");
-                                Console.ReadLine();
+                                Console.WriteLine("\nEmpty Database, no records to edit\nPress any key to go back to the main menu\n");
+                                Console.ReadKey(true);
                             }
                             break;
                         case 4:
@@ -244,31 +283,31 @@ namespace c_assignment_crud_3mrfouad_methods
                             else
                             {
                                 Console.Clear();
-                                Console.WriteLine("\nEmpty Database, no records to edit\nPress <ENTER> to go back to the main menu\n");
-                                Console.ReadLine();
+                                Console.WriteLine("\nEmpty Database, no records to edit\nPress any key to go back to the main menu\n");
+                                Console.ReadKey(true);
                             }
                             break;
-                        case 6:
-                            ImportRecords();
+                        case 5:
+                            ImportRecords(strList);
                             break;
-                        case 7:
-                            ExportRecords();
-                            break;
+                        /*  case 6:
+                             ExportRecords(strList);
+                             break; */
                         case 7: // exit the program
                             progExitFlg = true;
                             break;
                         default: // in case of integer other than 1, 2 or 3
                             Console.Clear();
-                            Console.WriteLine("\n\nValidation Error: invalid menu choice\nPress <ENTER> to go back to the main menu\n");
-                            Console.ReadLine();
+                            Console.WriteLine("\n\nValidation Error: invalid menu choice\nPress anykey to go back to the main menu\n");
+                            Console.ReadKey(true);
                             break;
                     }
                 }
                 else // in case nondigit key pressed by by the user
                 {
                     Console.Clear();
-                    Console.WriteLine("\n\nValidation Error: unexpected input\nPress <ENTER> to go back to the main menu\n");
-                    Console.ReadLine();
+                    Console.WriteLine("\n\nValidation Error: unexpected input\nPress any key to go back to the main menu\n");
+                    Console.ReadKey(true);
                 }
             } while (!progExitFlg);
         }
@@ -285,7 +324,7 @@ namespace c_assignment_crud_3mrfouad_methods
             int recordID = 0;
             bool validRecordID, exitFlag = false;
             string recordValue;
-            ReadRecords(strList, false);
+            ReadRecords(strList, 0);
 
             Console.Write("\n1. Edit using record ID\n2. Edit using record value\n3. Exit\n");
 
@@ -414,27 +453,31 @@ namespace c_assignment_crud_3mrfouad_methods
         //-----------------------
         //Read (Dispaly) Records
         //-----------------------
-        public static void ReadRecords(List<string> strList, bool clearConsole)
+        public static void ReadRecords(List<string> strList, int clearConsole)
         {
             if (strList.Count != 0)
             {
-                Console.Clear();
+
+                if (clearConsole < 3)
+                {
+                    Console.Clear();
+                }
                 Console.WriteLine("\nThe Database has: {0}", strList.Count + " records");
                 for (int i = 0; i < strList.Count; i++)
                 {
                     Console.WriteLine("Record [{0}", (i + 1) + "]" + "    Name:" + strList[i]);
                 }
-                if (clearConsole)
+                if (clearConsole == 1 || clearConsole == 3)
                 {
-                    Console.WriteLine("Press <ENTER> to proceed");
-                    Console.ReadLine();
+                    Console.WriteLine("Press any key to proceed");
+                    Console.ReadKey(true);
                 }
             }
             else // in case the records are empty, let the user know
             {
                 Console.Clear();
-                Console.WriteLine("\nEmtpy Database, no records to display\nPress <ENTER> to go back to the main menu\n");
-                Console.ReadLine();
+                Console.WriteLine("\nEmtpy Database, no records to display\nPress any key to go back to the main menu\n");
+                Console.ReadKey(true);
             }
 
         }

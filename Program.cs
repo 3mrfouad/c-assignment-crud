@@ -2,6 +2,7 @@
 using System.Collections.Generic; // to include lists
 using c_assignment_crud_3mrfouad_methods;
 using System.Threading.Tasks;
+using System.IO;
 //using c_assignment_crud_3mrfouad_methods_music;
 
 namespace c_assignment_crud_3mrfouad
@@ -25,20 +26,20 @@ namespace c_assignment_crud_3mrfouad
 
         static void Main(string[] args)
         {
-            int i = 0;
+            //int i = 0;
             Console.Clear();
             //Creating list of dataset records
             List<string> names = new List<string>();
             Console.BackgroundColor = ConsoleColor.Gray;
             Console.ForegroundColor = ConsoleColor.DarkMagenta;
             Console.WriteLine("\nWelcome to CRUD Database\nThrough this program, you can enter, edit, view the Database records\nNote:Total number of basic Database records is 10");
-            do
+            /*do
             {
                 c_assignment_crud_3mrfouad_methods_music.Sample.PlayMusic();
                 Task.Delay(3000);
                 i++;
             }
-            while(i<=1);
+            while(i<=1); */ 
             Console.WriteLine("\nPress <Enter> to Proceed");
             Console.ReadKey();
             Console.BackgroundColor = ConsoleColor.Blue;
