@@ -570,13 +570,13 @@ namespace c_assignment_crud_3mrfouad_methods
             string tempStr = "";
             // validating if user entered exit sequance
 
-            if (strList.Count == 10 && newOrEdit == 1) // error Msg. in case of data entery while the list is already fully populated with 10 records
-            {
+          //  if (strList.Count == 10 && newOrEdit == 1) // error Msg. in case of data entery while the list is already fully populated with allowed records
+          //  {
                 Console.WriteLine("\nRecords Maxed Out, try again later when we update the program with delete,edit option\nPress any key to continue");
                 Console.ReadKey(true);
-            }
-            else // otherwise, there is space for new records to be added
-            {
+         //   }
+          //  else // otherwise, there is space for new records to be added
+         //   {
 
                 do
                 {
@@ -649,8 +649,8 @@ namespace c_assignment_crud_3mrfouad_methods
                         }
                     } while (digtdetct);
 
-                } while (!exitFlag && strList.Count < 10); // list count validation less than 10 records
-            }
+                } while (!exitFlag /*&& strList.Count < 10*/); // list count validation less than allowed records
+          //  }
             return exitFlag;
         }
 
