@@ -30,8 +30,8 @@ namespace c_assignment_crud_3mrfouad
             Console.Clear();
             //Creating list of dataset records
             List<string> names = new List<string>();
-            Console.BackgroundColor = ConsoleColor.Gray;
-            Console.ForegroundColor = ConsoleColor.DarkMagenta;
+            Console.BackgroundColor = ConsoleColor.Blue;
+            Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("\nWelcome to CRUD Database\nThrough this program, you can enter, edit, view the Database records\nNote:Total number of basic Database records is 10");
             /*do
             {
@@ -42,8 +42,6 @@ namespace c_assignment_crud_3mrfouad
             while(i<=1); */ 
             Console.WriteLine("\nPress <Enter> to Proceed");
             Console.ReadKey();
-            Console.BackgroundColor = ConsoleColor.Blue;
-            Console.ForegroundColor = ConsoleColor.White;
             //Calling menu options method
             CRUD_Methods.MenuOptions(names);
             Console.ResetColor();
